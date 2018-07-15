@@ -1,5 +1,6 @@
 package com.example.bgock.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageInfo;
+import 	android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
@@ -27,8 +29,18 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
 
+            case R.id.recyclerView:
+                startEditExerciseList();
+                break;
+
         }
 
+    }
+
+    void startEditExerciseList(){
+        Context context = getApplicationContext();
+
+        Toast.makeText(context, "position = " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
     }
     void startVoiceRecognitionActivity() {
 
