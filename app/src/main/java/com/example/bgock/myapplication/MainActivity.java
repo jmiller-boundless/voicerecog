@@ -5,12 +5,19 @@ import android.content.Intent;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
 import android.content.pm.PackageManager;
 import android.content.pm.PackageInfo;
 import 	android.widget.Toast;
+
+import com.example.bgock.myapplication.adapter.SimpleAdapter;
+import com.example.bgock.myapplication.model.SimpleViewModel;
 
 public class MainActivity extends AppCompatActivity {
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
@@ -19,29 +26,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SimpleAdapter adapter = new SimpleAdapter(generateSimpleList(),this.getApplicationContext());
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.simple_recyclerview);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
     public void onClick(View v) {
 
         switch (v.getId()) {
 
-            case R.id.button:
+            /*case R.id.button:
                 startVoiceRecognitionActivity();
 
-                break;
+                break;*/
 
-            case R.id.recyclerView:
-                startEditExerciseList();
-                break;
 
         }
 
     }
 
-    void startEditExerciseList(){
-        Context context = getApplicationContext();
+    private List<SimpleViewModel> generateSimpleList() {
+        List<SimpleViewModel> simpleViewModelList = new ArrayList<>();
 
-        Toast.makeText(context, "position = " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+        for (int i = 0; i < 100; i++) {
+            simpleViewModelList.add(new SimpleViewModel(String.format(Locale.US, "This is itemJoe %d", i)));
+        }
+
+        return simpleViewModelList;
     }
+
+
     void startVoiceRecognitionActivity() {
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
